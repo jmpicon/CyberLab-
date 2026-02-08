@@ -1,0 +1,14 @@
+target/
+**/*.rs.bk
+.git/
+client/
+docs/
+steam/
+tests/
+tools/
+savegame.json
+docker-compose.yml
+Dockerfile
+README.md
+README_DEV.md
+setup_linux.sh
