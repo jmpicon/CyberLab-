@@ -17,6 +17,20 @@ services:
     networks:
       - cyberlab-net
 
+  web-client:
+    build:
+      context: ./web-client
+      dockerfile: Dockerfile
+    container_name: cyberlab-web
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:3000
+    depends_on:
+      - backend
+    networks:
+      - cyberlab-net
+
 networks:
   cyberlab-net:
     driver: bridge
