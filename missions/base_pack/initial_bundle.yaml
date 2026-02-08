@@ -1,0 +1,50 @@
+id: linux-01
+title: "The Silent Entry"
+category: "Linux Fundamentals"
+difficulty: "Beginner"
+description: "Welcome to the grid. Your first task is to explore the filesystem and find the hidden flag in the home directory."
+reward: 100
+reputation: 10
+objectives:
+  - id: find_flag
+    description: "Locate 'flag.txt' in /home/user"
+    checker: "test -f /home/user/flag.txt"
+lab:
+  image: "debian:bookworm-slim"
+  setup:
+    - "mkdir -p /home/user"
+    - "echo 'CYBERLAB{ROOT_START}' > /home/user/flag.txt"
+---
+id: linux-02
+title: "The Permissions Game"
+category: "Linux Fundamentals"
+difficulty: "Beginner"
+description: "Analyze the permissions of the file /var/secrets/data.txt and make it readable for the current user."
+reward: 150
+reputation: 15
+objectives:
+  - id: fix_perms
+    description: "Set /var/secrets/data.txt to 644"
+    checker: "[ $(stat -c %a /var/secrets/data.txt) == '644' ]"
+lab:
+  image: "debian:bookworm-slim"
+  setup:
+    - "mkdir -p /var/secrets"
+    - "touch /var/secrets/data.txt"
+    - "chmod 000 /var/secrets/data.txt"
+---
+id: blue-01
+title: "The Firewall Breach"
+category: "Blue Team"
+difficulty: "Novice"
+description: "A local service is exposed. Configure iptables to block incoming traffic on port 8080."
+reward: 500
+reputation: 50
+objectives:
+  - id: block_port
+    description: "Block TCP 8080"
+    checker: "iptables -L | grep 8080 | grep DROP"
+lab:
+  image: "debian:bookworm-slim"
+  install:
+    - "iptables"

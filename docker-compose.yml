@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   backend:
     build:
@@ -22,6 +20,7 @@ services:
       context: ./web-client
       dockerfile: Dockerfile
     container_name: cyberlab-web
+    restart: unless-stopped
     ports:
       - "5173:5173"
     environment:

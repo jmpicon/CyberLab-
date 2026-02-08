@@ -5,7 +5,7 @@ mod state;
 use crate::state::PlayerState;
 use axum::{
     extract::{ws::{Message, WebSocket, WebSocketUpgrade}, State},
-    response::{IntoResponse, Html},
+    response::{IntoResponse, Html, Redirect},
     routing::{get, post},
     Router, Json,
 };
@@ -43,7 +43,8 @@ async fn main() {
 }
 
 async fn root_handler() -> impl IntoResponse {
-    Html("<h1>CyberLab Backend is ACTIVE</h1><p>The game server is listening for UE5 client connections.</p><p>Check <a href='/api/health'>/api/health</a> for status.</p>")
+    // Automatically redirect browser users to the graphical UI port
+    Redirect::temporary("http://localhost:5173")
 }
 
 async fn health_check() -> impl IntoResponse {
