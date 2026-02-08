@@ -95,7 +95,7 @@ async fn handle_socket(mut socket: WebSocket) {
             return;
         }
     };
- Riverside
+
     let mut master_reader = unsafe { tokio::fs::File::from_raw_fd(pty.fd) };
     let mut master_writer = unsafe { tokio::fs::File::from_raw_fd(pty.fd) };
 
