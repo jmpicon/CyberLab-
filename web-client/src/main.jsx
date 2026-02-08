@@ -19,6 +19,12 @@ const App = () => {
             .then(data => setPlayerState(data))
             .catch(err => console.error("Backend unreachable"));
 
+        // Fetch missions
+        fetch('http://localhost:3000/api/missions')
+            .then(res => res.json())
+            .then(data => setMissions(data))
+            .catch(err => console.error("Could not load missions"));
+
         // WebSocket for Terminal
         wsRef.current = new WebSocket('ws://localhost:3000/ws/terminal');
         wsRef.current.onmessage = (event) => {
@@ -121,10 +127,18 @@ const App = () => {
                     {view === 'missions' && (
                         <div style={styles.viewContent}>
                             <h2 style={styles.viewTitle}>AVAILABLE_CONTRACTS</h2>
-                            {['Linux Essentials', 'Blue Team Defense', 'Industrial Espionage'].map(m => (
-                                <div key={m} style={styles.missionItem}>
-                                    <div>{m}</div>
-                                    <button style={styles.btn}>ACCEPT_MISSION</button>
+                            {missions.map(m => (
+                                <div key={m.id} style={styles.missionItem}>
+                                    <div>
+                                        <div style={{ fontWeight: 'bold' }}>{m.title}</div>
+                                        <div style={{ fontSize: '0.7rem', color: '#666' }}>{m.category} | {m.difficulty}</div>
+                                    </div>
+                                    <div style={{ textAlign: 'right' }}>
+                                        <div style={{ color: '#39ff14', fontSize: '0.8rem' }}>${m.reward} CREDITS</div>
+                                        <button style={styles.btn} onClick={() => setHistory(prev => [...prev, `[INIT]: Starting ${m.id}...`])}>
+                                            ACCEPT_MISSION
+                                        </button>
+                                    </div>
                                 </div>
                             ))}
                         </div>
