@@ -1,0 +1,13 @@
+category: linux
+description: 'Standard operational task for linux path. Objective: linux-01.'
+difficulty: Junior
+id: linux-01
+lab:
+  image: debian:bookworm-slim
+objectives:
+- checker: ls
+  description: Complete the sandbox task
+  id: obj1
+reputation: 10
+reward: 100
+title: Operation Linux 01

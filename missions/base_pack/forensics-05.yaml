@@ -1,0 +1,13 @@
+category: forensics
+description: 'Standard operational task for forensics path. Objective: forensics-05.'
+difficulty: Senior
+id: forensics-05
+lab:
+  image: debian:bookworm-slim
+objectives:
+- checker: ls
+  description: Complete the sandbox task
+  id: obj1
+reputation: 50
+reward: 500
+title: Operation Forensics 05

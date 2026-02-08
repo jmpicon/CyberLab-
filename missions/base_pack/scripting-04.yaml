@@ -1,0 +1,13 @@
+category: scripting
+description: 'Standard operational task for scripting path. Objective: scripting-04.'
+difficulty: Senior
+id: scripting-04
+lab:
+  image: debian:bookworm-slim
+objectives:
+- checker: ls
+  description: Complete the sandbox task
+  id: obj1
+reputation: 40
+reward: 400
+title: Operation Scripting 04

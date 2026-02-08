@@ -1,0 +1,13 @@
+category: web
+description: 'Standard operational task for web path. Objective: web-04.'
+difficulty: Senior
+id: web-04
+lab:
+  image: debian:bookworm-slim
+objectives:
+- checker: ls
+  description: Complete the sandbox task
+  id: obj1
+reputation: 40
+reward: 400
+title: Operation Web 04

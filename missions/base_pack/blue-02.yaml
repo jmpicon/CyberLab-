@@ -1,0 +1,13 @@
+category: blue
+description: 'Standard operational task for blue path. Objective: blue-02.'
+difficulty: Junior
+id: blue-02
+lab:
+  image: debian:bookworm-slim
+objectives:
+- checker: ls
+  description: Complete the sandbox task
+  id: obj1
+reputation: 20
+reward: 200
+title: Operation Blue 02

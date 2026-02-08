@@ -1,0 +1,13 @@
+category: espionage
+description: 'Standard operational task for espionage path. Objective: espionage-04.'
+difficulty: Senior
+id: espionage-04
+lab:
+  image: debian:bookworm-slim
+objectives:
+- checker: ls
+  description: Complete the sandbox task
+  id: obj1
+reputation: 40
+reward: 400
+title: Operation Espionage 04
