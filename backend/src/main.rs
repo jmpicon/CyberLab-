@@ -5,10 +5,11 @@ mod state;
 use crate::state::PlayerState;
 use axum::{
     extract::{ws::{Message, WebSocket, WebSocketUpgrade}, State},
-    response::IntoResponse,
+    response::{IntoResponse, Html},
     routing::{get, post},
     Router, Json,
 };
+use tower_http::cors::CorsLayer;
 use std::sync::{Arc, Mutex};
 use std::net::SocketAddr;
 use tracing_subscriber;
@@ -27,10 +28,12 @@ async fn main() {
     });
 
     let app = Router::new()
+        .route("/", get(root_handler))
         .route("/api/health", get(health_check))
         .route("/api/player", get(get_player_state))
         .route("/api/mission/start", post(start_mission))
         .route("/ws/terminal", get(terminal_handler))
+        .layer(CorsLayer::permissive())
         .with_state(shared_state);
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
@@ -39,8 +42,12 @@ async fn main() {
     axum::serve(listener, app).await.unwrap();
 }
 
+async fn root_handler() -> impl IntoResponse {
+    Html("<h1>CyberLab Backend is ACTIVE</h1><p>The game server is listening for UE5 client connections.</p><p>Check <a href='/api/health'>/api/health</a> for status.</p>")
+}
+
 async fn health_check() -> impl IntoResponse {
-    Json(json!({ "status": "ok" }))
+    Json(json!({ "status": "ok", "service": "CyberLab Orchestrator" }))
 }
 
 async fn get_player_state(State(state): State<Arc<AppState>>) -> impl IntoResponse {

@@ -18,7 +18,30 @@ if ! command -v cargo &> /dev/null; then
     source $HOME/.cargo/env
 fi
 
-# 3. Setup Docker permissions
+# 3. Ensure PATH is setup
+if ! command -v cargo &> /dev/null; then
+    if [ -f "$HOME/.cargo/env" ]; then
+        echo "[*] Sourcing cargo environment..."
+        source "$HOME/.cargo/env"
+    else
+        echo "[!] Cargo not found. Is it installed?"
+    fi
+fi
+
+# Add to .zshrc if using zsh and not already there
+if [[ "$SHELL" == *"zsh"* ]]; then
+    if ! grep -q ".cargo/bin" "$HOME/.zshrc"; then
+        echo "[*] Adding cargo to .zshrc..."
+        echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> "$HOME/.zshrc"
+    fi
+elif [[ "$SHELL" == *"bash"* ]]; then
+    if ! grep -q ".cargo/bin" "$HOME/.bashrc"; then
+        echo "[*] Adding cargo to .bashrc..."
+        echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> "$HOME/.bashrc"
+    fi
+fi
+
+# 4. Setup Docker permissions
 echo "[*] Adding current user to 'docker' group (may require sudo)..."
 sudo usermod -aG docker $USER || true
 
