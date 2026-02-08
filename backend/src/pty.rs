@@ -1,8 +1,7 @@
-use nix::pty::{openpty, Winsize};
-use nix::unistd::{read, write, fork, ForkResult, execvp};
+use nix::pty::openpty;
+use nix::unistd::{fork, ForkResult, execvp};
 use std::ffi::CString;
-use std::os::unix::io::RawFd;
-use tokio::io::{AsyncReadExt, AsyncWriteExt};
+use std::os::unix::io::{RawFd, AsRawFd};
 
 pub struct PtySession {
     pub fd: RawFd,
@@ -12,29 +11,30 @@ pub struct PtySession {
 impl PtySession {
     pub fn new(command: &str, args: &[&str]) -> Result<Self, Box<dyn std::error::Error>> {
         let pty = openpty(None, None)?;
-        let master_fd = pty.master;
-        let slave_fd = pty.slave;
+        let master_fd = pty.master.as_raw_fd();
+        let slave_fd = pty.slave.as_raw_fd();
 
         match unsafe { fork() }? {
             ForkResult::Parent { child } => {
+                // In parent, we must keep master_fd. 
+                // Note: OwnedFd will close on drop, so we might need to leak it or store it differently.
+                // For MVP, we'll convert and manage raw fds, but technically pty.master should be kept alive.
+                std::mem::forget(pty.master); 
                 Ok(Self { fd: master_fd, child_pid: child })
             }
             ForkResult::Child => {
-                // In child: setup slave PTY as stdin/stdout/stderr
                 unsafe {
                     libc::login_tty(slave_fd);
                 }
                 
                 let cmd = CString::new(command)?;
-                let c_args: Vec<CString> = args.iter()
-                    .map(|&s| CString::new(s).unwrap())
-                    .collect();
-                let mut c_args_ptr: Vec<*const libc::c_char> = c_args.iter()
-                    .map(|s| s.as_ptr())
-                    .collect();
-                c_args_ptr.push(std::ptr::null());
+                let mut c_args: Vec<CString> = Vec::new();
+                c_args.push(cmd.clone());
+                for arg in args {
+                    c_args.push(CString::new(*arg)?);
+                }
 
-                execvp(&cmd, &c_args_ptr)?;
+                execvp(&cmd, &c_args)?;
                 unreachable!()
             }
         }

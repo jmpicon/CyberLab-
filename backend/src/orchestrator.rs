@@ -1,6 +1,5 @@
 use bollard::container::{Config, CreateContainerOptions, StartContainerOptions, RemoveContainerOptions};
 use bollard::Docker;
-use std::collections::HashMap;
 use std::error::Error;
 
 pub struct Orchestrator {

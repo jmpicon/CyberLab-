@@ -48,6 +48,11 @@ async fn get_player_state(State(state): State<Arc<AppState>>) -> impl IntoRespon
     Json(json!( *player ))
 }
 
+async fn start_mission() -> impl IntoResponse {
+    // Logic to call orchestrator.create_mission_container
+    Json(json!({ "status": "started", "container_id": "mock-id" }))
+}
+
 async fn terminal_handler(ws: WebSocketUpgrade) -> impl IntoResponse {
     ws.on_upgrade(handle_socket)
 }
