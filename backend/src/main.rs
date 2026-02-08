@@ -90,11 +90,12 @@ async fn handle_socket(mut socket: WebSocket) {
     let pty = match PtySession::new("/bin/bash", &["--login"]) {
         Ok(p) => p,
         Err(e) => {
-            let _ = socket.send(Message::Text(format!("Failed to spawn PTY: {}", e))).await;
+            let err_msg = format!("Failed to spawn PTY: {}", e);
+            let _ = socket.send(Message::Text(err_msg)).await;
             return;
         }
     };
-
+ Riverside
     let mut master_reader = unsafe { tokio::fs::File::from_raw_fd(pty.fd) };
     let mut master_writer = unsafe { tokio::fs::File::from_raw_fd(pty.fd) };
 
