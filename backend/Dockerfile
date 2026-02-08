@@ -1,5 +1,5 @@
 # Build Stage
-FROM rust:1.80-slim as builder
+FROM rust:latest as builder
 WORKDIR /app
 RUN apt-get update && apt-get install -y pkg-config libssl-dev build-essential
 COPY . .
