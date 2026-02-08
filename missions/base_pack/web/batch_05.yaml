@@ -1,0 +1,30 @@
+# Web Security Pack (5 Missions)
+- id: "web-01"
+  title: "Inyección de Comandos"
+  description: "Explota una vulnerabilidad en una app interna que usa 'shell_exec' para listar archivos."
+  reward: { credits: 400, rep: 50 }
+  objectives: [{ id: "exploit-rce", type: "file_exists", path: "/tmp/rce_success" }]
+
+- id: "web-02"
+  title: "Directorios Ocultos"
+  description: "Usa 'gobuster' o 'dirb' contra http://localhost:8080 para encontrar la carpeta /admin."
+  reward: { credits: 300, rep: 35 }
+  objectives: [{ id: "find-admin", type: "command_executed", command_pattern: ".*http://localhost:8080.*/admin.*" }]
+
+- id: "web-03"
+  title: "Configuración Débil"
+  description: "Encuentra las credenciales de la base de datos en un archivo config.php mal protegido."
+  reward: { credits: 250, rep: 30 }
+  objectives: [{ id: "grep-creds", type: "command_executed", command_pattern: "grep .*DB_PASSWORD.* config.php" }]
+
+- id: "web-04"
+  title: "Carga de Archivos"
+  description: "Sube un archivo 'shell.txt' al servidor web y ejecútalo para obtener una shell reversa (interna)."
+  reward: { credits: 500, rep: 60 }
+  objectives: [{ id: "upload-shell", type: "file_exists", path: "/var/www/uploads/shell.txt" }]
+
+- id: "web-05"
+  title: "Fuerza Bruta Web"
+  description: "Usa 'hydra' para descifrar la contraseña del usuario 'admin' en el panel de login interno."
+  reward: { credits: 450, rep: 55 }
+  objectives: [{ id: "hydra-web", type: "command_executed", command_pattern: "hydra.*http-post-form.*" }]

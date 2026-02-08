@@ -1,0 +1,30 @@
+# Blue Team / SOC Pack (5 Missions)
+- id: "blue-01"
+  title: "Detección de Intrusos"
+  description: "Analiza el log /var/log/auth.log y encuentra la IP que intentó hacer fuerza bruta SSH."
+  reward: { credits: 250, rep: 30 }
+  objectives: [{ id: "find-attacker", type: "file_content", path: "/home/user/attacker_ip.txt", contains: "192.168.1.45" }]
+
+- id: "blue-02"
+  title: "Cerrando Puertas"
+  description: "Configura el firewall 'ufw' para denegar todo el tráfico entrante al puerto 23 (Telnet)."
+  reward: { credits: 300, rep: 35 }
+  objectives: [{ id: "ufw-deny", type: "command_executed", command_pattern: "ufw deny 23" }]
+
+- id: "blue-03"
+  title: "Hardening de SSH"
+  description: "Desactiva el login de root en /etc/ssh/sshd_config."
+  reward: { credits: 280, rep: 28 }
+  objectives: [{ id: "disable-root-ssh", type: "file_content", path: "/etc/ssh/sshd_config", contains: "PermitRootLogin no" }]
+
+- id: "blue-04"
+  title: "Monitorizando Cambios"
+  description: "Usa 'auditd' para registrar cualquier acceso al archivo /etc/passwd."
+  reward: { credits: 350, rep: 40 }
+  objectives: [{ id: "audit-passwd", type: "command_executed", command_pattern: "auditctl.*-w /etc/passwd" }]
+
+- id: "blue-05"
+  title: "Respuesta ante Incidentes"
+  description: "Un script malicioso 'backdoor.sh' se está ejecutando. Encuéntralo y bórralo."
+  reward: { credits: 400, rep: 45 }
+  objectives: [{ id: "kill-backdoor", type: "file_not_exists", path: "/usr/local/bin/backdoor.sh" }]

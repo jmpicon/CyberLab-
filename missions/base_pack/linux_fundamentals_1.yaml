@@ -1,0 +1,27 @@
+id: "linux-fundamentals-1"
+title: "The Ghost in the Machine"
+description: "A mysterious file was left in the /tmp directory. Investigate its contents and create a summary."
+category: "Linux Fundamentals"
+difficulty: 1
+reward:
+  credits: 100
+  rep: 10
+
+environment:
+  image: "ubuntu:22.04" # In production, this would be a custom image with tools pre-installed
+  network: "isolated-net"
+  files:
+    - path: "/tmp/secret_note.txt"
+      content: "Subject: Project X\nThe key is: CYBERLAB_INITIAL_FLAG"
+      owner: "root"
+      permissions: "0644"
+
+objectives:
+  - id: "read-note"
+    type: "command_executed"
+    command_pattern: "cat /tmp/secret_note.txt"
+    description: "Read the secret note in /tmp."
+  - id: "create-flag"
+    type: "file_exists"
+    path: "/home/user/flag.txt"
+    description: "Create a file named flag.txt in your home directory."

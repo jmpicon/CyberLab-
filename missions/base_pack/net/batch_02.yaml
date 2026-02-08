@@ -1,0 +1,30 @@
+# Networking Pack (5 Missions)
+- id: "net-01"
+  title: "Vecinos Ruidosos"
+  description: "Usa 'arp -a' para encontrar otras IPs en la red local del sandbox."
+  reward: { credits: 200, rep: 20 }
+  objectives: [{ id: "find-ips", type: "command_executed", command_pattern: "arp -a" }]
+
+- id: "net-02"
+  title: "Puertos Abiertos"
+  description: "Usa 'nmap' para escanear el host 10.0.0.5 y encontrar un servicio HTTP."
+  reward: { credits: 250, rep: 25 }
+  objectives: [{ id: "nmap-http", type: "command_executed", command_pattern: "nmap.*10.0.0.5" }]
+
+- id: "net-03"
+  title: "Sniffing Básico"
+  description: "Vuelca el tráfico de la interfaz eth0 a un archivo .pcap usando tcpdump."
+  reward: { credits: 300, rep: 30 }
+  objectives: [{ id: "tcpdump-save", type: "file_exists", path: "/tmp/capture.pcap" }]
+
+- id: "net-04"
+  title: "Resolución de Nombres"
+  description: "El DNS interno está roto. Modifica /etc/hosts para que 'lab-target' apunte a 10.0.0.10."
+  reward: { credits: 180, rep: 18 }
+  objectives: [{ id: "dns-fix", type: "file_content", path: "/etc/hosts", contains: "10.0.0.10.*lab-target" }]
+
+- id: "net-05"
+  title: "Saltos de Red"
+  description: "Usa 'traceroute' para identificar cuántos saltos hay hasta el gateway del lab."
+  reward: { credits: 150, rep: 15 }
+  objectives: [{ id: "traceroute-run", type: "command_executed", command_pattern: "traceroute.*" }]

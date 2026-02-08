@@ -1,0 +1,54 @@
+# Linux Fundamentals Pack (10 Missions)
+- id: "linux-02"
+  title: "Permisos Peligrosos"
+  description: "Encuentra un archivo con permisos 777 en /etc y cámbialo a 644."
+  reward: { credits: 150, rep: 15 }
+  objectives: [{ id: "fix-perms", type: "file_permissions", path: "/etc/vulnerable.conf", expected: "0644" }]
+
+- id: "linux-03"
+  title: "El Fantasma en los Procesos"
+  description: "Hay un proceso consumiendo mucha CPU. Identifica su PID y mátalo."
+  reward: { credits: 200, rep: 20 }
+  objectives: [{ id: "kill-proc", type: "process_not_running", name: "bad_miner" }]
+
+- id: "linux-04"
+  title: "Buscando la Aguja"
+  description: "Busca la cadena 'ERROR_CRITICO' en todos los archivos de /var/log."
+  reward: { credits: 180, rep: 18 }
+  objectives: [{ id: "grep-log", type: "command_executed", command_pattern: "grep .*ERROR_CRITICO.* /var/log/.*" }]
+
+- id: "linux-05"
+  title: "Usuarios no Invitados"
+  description: "Un usuario llamado 'hacker' se ha colado. Elimínalo del sistema."
+  reward: { credits: 250, rep: 25 }
+  objectives: [{ id: "del-user", type: "user_not_exists", username: "hacker" }]
+
+- id: "linux-06"
+  title: "Tareas Programadas"
+  description: "Encuentra el cronjob malicioso que borra el home cada hora y elimínalo."
+  reward: { credits: 300, rep: 30 }
+  objectives: [{ id: "del-cron", type: "cron_not_exists", pattern: "rm -rf /home" }]
+
+- id: "linux-07"
+  title: "Espacio Agotado"
+  description: "El disco está lleno. Encuentra el archivo más grande en /tmp y bórralo."
+  reward: { credits: 120, rep: 12 }
+  objectives: [{ id: "del-large", type: "file_not_exists", path: "/tmp/massive_log.dump" }]
+
+- id: "linux-08"
+  title: "Dueños Equivocados"
+  description: "El archivo /etc/shadow no debería ser propiedad de 'user'. Cámbialo a root."
+  reward: { credits: 160, rep: 16 }
+  objectives: [{ id: "fix-owner", type: "file_owner", path: "/etc/shadow", expected: "root" }]
+
+- id: "linux-09"
+  title: "Rutas de Ejecución"
+  description: "Añade /opt/tools al PATH del usuario actual permanentemente."
+  reward: { credits: 220, rep: 22 }
+  objectives: [{ id: "fix-path", type: "file_content", path: "/home/user/.bashrc", contains: "PATH=$PATH:/opt/tools" }]
+
+- id: "linux-10"
+  title: "Servicios Zombis"
+  description: "El servicio 'old_db' está corriendo pero no debería. Paralo."
+  reward: { credits: 200, rep: 20 }
+  objectives: [{ id: "stop-service", type: "service_not_running", name: "old_db" }]

@@ -1,0 +1,30 @@
+# Forensics Pack (5 Missions)
+- id: "foren-01"
+  title: "Corrupción de Archivos"
+  description: "Usa 'file' para identificar el tipo real de un archivo sospechoso 'image.jpg' que parece no abrirse."
+  reward: { credits: 200, rep: 25 }
+  objectives: [{ id: "file-type", type: "command_executed", command_pattern: "file .*image.jpg" }]
+
+- id: "foren-02"
+  title: "Recuperando el Pasado"
+  description: "Restaura un archivo borrado recientemente en el directorio /tmp usando 'testdisk' o similar (simulado)."
+  reward: { credits: 350, rep: 40 }
+  objectives: [{ id: "recover-file", type: "file_exists", path: "/tmp/recovered_data.zip" }]
+
+- id: "foren-03"
+  title: "Timeline de Ataque"
+  description: "Ordena los eventos del log por timestamp para encontrar el primer comando ejecutado por el atacante."
+  reward: { credits: 280, rep: 30 }
+  objectives: [{ id: "sort-logs", type: "command_executed", command_pattern: "sort .*-k.* /var/log/attack.log" }]
+
+- id: "foren-04"
+  title: "Hashes de Integridad"
+  description: "Calcula el hash SHA256 de /bin/ls para verificar si ha sido modificado por un rootkit."
+  reward: { credits: 150, rep: 15 }
+  objectives: [{ id: "sha256-check", type: "command_executed", command_pattern: "sha256sum /bin/ls" }]
+
+- id: "foren-05"
+  title: "Artefactos de Red"
+  description: "Analiza el archivo /var/log/syslog para encontrar trazas de una conexión SSH exitosa desde fuera."
+  reward: { credits: 320, rep: 35 }
+  objectives: [{ id: "grep-syslog", type: "command_executed", command_pattern: "grep .*Accepted password for.*" }]

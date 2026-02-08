@@ -1,0 +1,22 @@
+# Rust
+/backend/target/
+**/*.rs.bk
+Cargo.lock
+
+# Unreal Engine
+/client/Binaries/
+/client/Build/
+/client/DerivedDataCache/
+/client/Intermediate/
+/client/Saved/
+/client/.vscode/
+/client/*.xcworkspace
+/client/*.sln
+
+# Misc
+.DS_Store
+*.log
+savegame.json
+node_modules/
+__pycache__/
+.env
