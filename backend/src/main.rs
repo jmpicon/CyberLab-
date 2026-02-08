@@ -6,7 +6,7 @@ use futures::{SinkExt, StreamExt};
 use crate::state::PlayerState;
 use axum::{
     extract::{ws::{Message, WebSocket, WebSocketUpgrade}, State},
-    response::{IntoResponse, Html, Redirect},
+    response::{IntoResponse, Redirect},
     routing::{get, post},
     Router, Json,
 };
@@ -120,7 +120,7 @@ async fn handle_socket(mut socket: WebSocket) {
     // Task: WebSocket -> PTY Input
     let tx_in = tx.clone();
     tokio::spawn(async move {
-        while let Some(msg) = ws_receiver.recv().await {
+        while let Some(msg) = ws_receiver.next().await {
             if let Ok(Message::Text(t)) = msg {
                 if master_writer.write_all(t.as_bytes()).await.is_err() {
                     break;
