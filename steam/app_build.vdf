@@ -1,0 +1,20 @@
+"AppBuild"
+{
+	"AppID" "YOUR_APP_ID_HERE"
+	"Desc" "Initial CyberLab Build"
+	"ContentRoot" "..\build\client\"
+	"BuildOutput" "..\steam_build_output\"
+
+	"Depots"
+	{
+		"YOUR_DEPOT_ID_HERE"
+		{
+			"FileMapping"
+			{
+				"LocalPath" "*"
+				"DepotPath" "."
+				"recursive" "1"
+			}
+		}
+	}
+}
